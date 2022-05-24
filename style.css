@@ -1,0 +1,13 @@
+body{
+    background-color: slategray;
+}
+h1{
+   font-size: x-large;
+   display: flex;
+   justify-content: center;
+}
+h2{
+    font-size: larger;
+   display: flex;
+   justify-content: center;
+}
