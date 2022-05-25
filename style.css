@@ -2,12 +2,24 @@ body{
     background-color: slategray;
 }
 h1{
-   font-size: x-large;
+   font-size: xx-large;
    display: flex;
    justify-content: center;
 }
 h2{
-    font-size: larger;
+    font-size: 20px;
    display: flex;
    justify-content: center;
+}
+div{
+    display: flex;
+  
+}
+img{
+    border: solid 5px black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 350px;
+
 }
