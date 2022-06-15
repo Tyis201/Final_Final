@@ -16,3 +16,6 @@ http://meyerweb.com/eric/tools/css/reset/
    It will function just like the game
    All the code we understand and alot of it from the pong game we made 
    HE will complete some html and java
+
+src: Pong game that was made previously 
+https://gist.github.com/straker/ff00b4b49669ad3dec890306d348adc4
