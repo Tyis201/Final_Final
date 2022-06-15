@@ -1,123 +1,102 @@
-('use strict')
-console.log('hello world')
 
-function remove(){
-  document.getElementById('start').style.display = 'none';
-  document.getElementById('btn1').style.display = 'none';
-  document.getElementById('btn2').style.display = 'none';
-  document.getElementById('btn3').style.display = 'none';
+var canvas = document.getElementById('game');
+var context = canvas.getContext('2d');
+var grid = 16;
+var count = 0;
+
+var snake = {
+  x: 160,
+  y: 160,
+  dx: grid,
+  dy: 0,
+  cells: [],
+  maxCells: 4
+};
+var apple = {
+  x: 320,
+  y: 320
+};
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
 }
-function remove2(){
-  document.getElementById('button1').style.display = 'none';
-  document.getElementById('button2').style.display = 'none';
-  document.getElementById('button3').style.display = 'none';
-  document.getElementById('2').style.display = 'none';
 
+function loop() {
+  requestAnimationFrame(loop);
+
+  if (++count < 4) {
+    return;
+  }
+
+  count = 0;
+  context.clearRect(0,0,canvas.width,canvas.height);
+
+
+  snake.x += snake.dx;
+  snake.y += snake.dy;
+
+
+  snake.cells.unshift({x: snake.x, y: snake.y});
+
+  if (snake.cells.length > snake.maxCells) {
+    snake.cells.pop();
+  }
+
+
+  context.fillStyle = 'red';
+  context.fillRect(apple.x, apple.y, grid-1, grid-1);
+
+
+  context.fillStyle = 'green';
+  snake.cells.forEach(function(cell, index) {
+    context.fillRect(cell.x, cell.y, grid-1, grid-1);
+
+    if (cell.x === apple.x && cell.y === apple.y) {
+      snake.maxCells++;
+
+      apple.x = getRandomInt(0, 25) * grid;
+      apple.y = getRandomInt(0, 25) * grid;
+    }
+    for (var i = index + 1; i < snake.cells.length; i++) {
+
+
+      if (cell.x === snake.cells[i].x && cell.y === snake.cells[i].y) {
+        snake.x = 160;
+        snake.y = 160;
+        snake.cells = [];
+        snake.maxCells = 4;
+        snake.dx = grid;
+        snake.dy = 0;
+
+        apple.x = getRandomInt(0, 25) * grid;
+        apple.y = getRandomInt(0, 25) * grid;
+      }
+    }
+  });
 }
 
-
- function start(){
-const node = document.createElement("h1");
-const textnode = document.createTextNode("this is a test");
-node.appendChild(textnode);
-document.getElementById("start").appendChild(node);
+document.addEventListener('keydown', function(e) {
 
 
-var myDiv = document.getElementById("option1");
-var button = document.createElement('BUTTON');
-button.setAttribute('id','btn1');
-var text = document.createTextNode("option1");
-button.appendChild(text);
-myDiv.appendChild(button); 
+  if (e.which === 37 && snake.dx === 0) {
+    snake.dx = -grid;
+    snake.dy = 0;
+  }
 
-var myDiv = document.getElementById("option2");
-var button = document.createElement('BUTTON');
-button.setAttribute('id','btn2');
-var text = document.createTextNode("option2");
-button.appendChild(text);
-myDiv.appendChild(button); 
+  else if (e.which === 38 && snake.dy === 0) {
+    snake.dy = -grid;
+    snake.dx = 0;
+  }
 
-var myDiv = document.getElementById("option3");
-var button = document.createElement('BUTTON');
-button.setAttribute('id','btn3');
-var text = document.createTextNode("option3");
-button.appendChild(text);
-myDiv.appendChild(button); 
+  else if (e.which === 39 && snake.dx === 0) {
+    snake.dx = grid;
+    snake.dy = 0;
+  }
 
-
-let btn1 = document.getElementById("option1");
-btn1.addEventListener('click', event => {
- test();
- remove();
+  else if (e.which === 40 && snake.dy === 0) {
+    snake.dy = grid;
+    snake.dx = 0;
+  }
 });
-let btn2 = document.getElementById("option2");
-btn2.addEventListener('click', event => {
-  test();
-  remove();
-});
-let btn3 = document.getElementById("option3");
-btn3.addEventListener('click', event => {
-  test();
-  remove();
- 
-});
-}
-start();
-
-   
 
 
-   function test(){
-     console.log('this worked');
-     const node = document.createElement("h1");
-     node.setAttribute('id','2')
-     const textnode = document.createTextNode("this worked");
-     node.appendChild(textnode);
-     document.getElementById("story").appendChild(node);
-
-       var myDiv = document.getElementById("option1");
-       var button = document.createElement('BUTTON');
-       button.setAttribute('id','button1');
-       var text = document.createTextNode("option1");
-       button.appendChild(text);
-       myDiv.appendChild(button); 
-       
-       var myDiv = document.getElementById("option2");
-       var button = document.createElement('BUTTON');
-       button.setAttribute('id','button2');
-       var text = document.createTextNode("option2");
-       button.appendChild(text);
-       myDiv.appendChild(button); 
-       
-       var myDiv = document.getElementById("option3");
-       var button = document.createElement('BUTTON');
-       button.setAttribute('id','button3');
-       var text = document.createTextNode("option3");
-       button.appendChild(text);
-       myDiv.appendChild(button);
-
-
-     let btn1 = document.getElementById("option1");
-     btn1.addEventListener('click', event => {
-      yes(); 
-      remove2();
-     });
-     let btn2 = document.getElementById("option2");
-     btn2.addEventListener('click', event => {
-       test();
-       remove2();
-     });
-
-     let btn3 = document.getElementById("option3");
-     btn3.addEventListener('click', event => {
-        test();
-       remove2();
-
-
- 
-
-   });}
-
-function yes(){
-  console.log('working')
-}
+requestAnimationFrame(loop);
